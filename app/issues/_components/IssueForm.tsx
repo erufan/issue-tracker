@@ -28,7 +28,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     resolver: zodResolver(issueSchema),
   });
 
-  const { push } = useRouter();
+  const router = useRouter();
   const [error, setError] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
 
@@ -38,7 +38,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
 
       if (issue) axios.patch("/api/issues/" + issue.id, data);
       else await axios.post("/api/issues", data);
-      push("/issues");
+      router.push("/issues");
+      router.refresh();
     } catch (error) {
       setError("An unexpected error occurred.");
     }
