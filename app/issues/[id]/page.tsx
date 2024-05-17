@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import EditIssueButton from "./EditIssueButton";
 import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
+import { auth } from "@/auth";
 
 interface Props {
   params: { id: string };
@@ -11,6 +12,7 @@ interface Props {
 
 const IssueDetailPage = async ({ params: { id } }: Props) => {
   const issue = await prisma.issue.findUnique({ where: { id: parseInt(id) } });
+  const session = await auth();
 
   if (!issue) notFound();
 
@@ -20,10 +22,12 @@ const IssueDetailPage = async ({ params: { id } }: Props) => {
         <IssueDetails issue={issue} />
       </Box>
       <Box>
-        <Flex direction="column" gap="4">
-          <EditIssueButton issueId={issue.id} />
-          <DeleteIssueButton issueId={issue.id} />
-        </Flex>
+        {session && (
+          <Flex direction="column" gap="4">
+            <EditIssueButton issueId={issue.id} />
+            <DeleteIssueButton issueId={issue.id} />
+          </Flex>
+        )}
       </Box>
     </Grid>
   );
