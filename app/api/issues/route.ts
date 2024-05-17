@@ -1,7 +1,6 @@
 import prisma from "@/prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { issueSchema } from "../../validationSchema";
-import { Session } from "inspector";
 import { auth } from "@/auth";
 
 interface Body {
