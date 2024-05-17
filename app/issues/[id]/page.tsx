@@ -6,6 +6,7 @@ import IssueDetails from "./IssueDetails";
 import DeleteIssueButton from "./DeleteIssueButton";
 import { auth } from "@/auth";
 import AssigneeSelect from "./AssigneeSelect";
+import { Skeleton } from "@/app/components";
 
 interface Props {
   params: { id: string };
@@ -13,6 +14,8 @@ interface Props {
 
 const IssueDetailPage = async ({ params: { id } }: Props) => {
   const issue = await prisma.issue.findUnique({ where: { id: parseInt(id) } });
+  const users = await prisma.user.findMany({ orderBy: { name: "asc" } });
+
   const session = await auth();
 
   if (!issue) notFound();
@@ -25,7 +28,7 @@ const IssueDetailPage = async ({ params: { id } }: Props) => {
       <Box>
         {session && (
           <Flex direction="column" gap="4">
-            <AssigneeSelect />
+            <AssigneeSelect users={users} issue={issue} />
             <EditIssueButton issueId={issue.id} />
             <DeleteIssueButton issueId={issue.id} />
           </Flex>
