@@ -10,21 +10,23 @@ interface Props {
 }
 
 const AssigneeSelect = ({ users, issue }: Props) => {
+  const assigneeIssue = (userId: string) => {
+    let sendedId;
+    userId === "unassign" ? (sendedId = null) : (sendedId = userId);
+    axios
+      .patch("/api/issues/" + issue.id, {
+        assignedToUserId: sendedId,
+      })
+      .catch(() => {
+        toast.error("changes could not be saved");
+      });
+  };
+
   return (
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || "unassign"}
-        onValueChange={(userId) => {
-          let sendedId;
-          userId === "unassign" ? (sendedId = null) : (sendedId = userId);
-          axios
-            .patch("/api/issues/" + issue.id, {
-              assignedToUserId: sendedId,
-            })
-            .catch(() => {
-              toast.error("changes could not be saved");
-            });
-        }}
+        onValueChange={assigneeIssue}
       >
         <Select.Trigger placeholder="assignee..." />
         <Select.Content>
