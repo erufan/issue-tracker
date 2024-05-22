@@ -55,16 +55,18 @@ const issuesPage = async ({ searchParams }: Props) => {
         <Table.Header>
           <Table.Row>
             {columns.map((column) => (
-              <Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell
+                key={column.value}
+                className={column.className}
+              >
                 <NextLink
                   href={{ query: { ...searchParams, orderBy: column.value } }}
-                  key={column.value}
                 >
-                  {column.label}{" "}
-                  {column.value === searchParams.orderBy && (
-                    <RxArrowUp className="inline" />
-                  )}
+                  {column.label}
                 </NextLink>
+                {column.value === searchParams.orderBy && (
+                  <RxArrowUp className="inline" />
+                )}
               </Table.ColumnHeaderCell>
             ))}
           </Table.Row>
