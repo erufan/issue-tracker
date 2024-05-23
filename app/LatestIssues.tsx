@@ -9,6 +9,7 @@ const LatestIssues = async () => {
     take: 5,
     include: { assignedToUser: true },
   });
+
   return (
     <Card>
       <Table.Root>

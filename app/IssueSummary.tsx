@@ -4,11 +4,11 @@ import Link from "next/link";
 
 interface Props {
   open: number;
-  inprogress: number;
+  inProgress: number;
   closed: number;
 }
 
-const IssueSummary = ({ open, inprogress, closed }: Props) => {
+const IssueSummary = ({ open, inProgress, closed }: Props) => {
   const containers: {
     label: string;
     value: number;
@@ -21,7 +21,7 @@ const IssueSummary = ({ open, inprogress, closed }: Props) => {
     },
     {
       label: "in-progress Issues",
-      value: inprogress,
+      value: inProgress,
       status: "IN_PROGRESS",
     },
     {
