@@ -7,5 +7,6 @@ const authConfig: NextAuthConfig = {
   adapter: PrismaAdapter(prisma),
   providers: [google],
   session: { strategy: "jwt" },
+  trustHost: true,
 };
 export default authConfig;
